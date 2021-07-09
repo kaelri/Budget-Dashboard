@@ -1,0 +1,9 @@
+# APP
+config.php
+
+# COMPOSER
+vendor
+composer.lock
+
+# GOOGLE
+credentials.json

@@ -29,6 +29,28 @@ if ( !empty($values) ) { foreach( $values as $value ) {
 	$sum += $num;
 }}
 
+$sum_prefix    = ( $sum >= 0 ) ? '$' : '-$';
+$sum_formatted = $sum_prefix . number_format( abs($sum), 2 );
+
+$status = null;
+
+while ( !is_string($status) ) {
+
+	if ( $sum < 0 ) {
+		$status = 'empty';
+		break;
+	}
+
+	if ( $sum < 500 ) {
+		$status = 'danger';
+		break;
+	}
+
+	$status = 'good';
+	break;
+
+}
+
 ?><!DOCTYPE html>
 
 <html lang="en">
@@ -51,8 +73,16 @@ if ( !empty($values) ) { foreach( $values as $value ) {
 	<style>
 	
 		body {
-			background: #5CB85C;
+			background: #5cb85c;
 			font-family: 'Roboto', sans-serif;
+		}
+
+		body.status-empty {
+			background: #d9534f;
+		}
+
+		body.status-danger {
+			background: #f0ad4e;
 		}
 
 		.budget-container {
@@ -74,6 +104,7 @@ if ( !empty($values) ) { foreach( $values as $value ) {
 			margin: 0;
 		}
 
+
 		.budget-desc {
 			margin: .5em 0 0;
 			font-weight: bold;
@@ -84,11 +115,11 @@ if ( !empty($values) ) { foreach( $values as $value ) {
 
 </head>
 
-<body>
+<body class="status-<?=$status?>">
 
 	<div class="budget-container">
 
-		<div class="budget-value">$<?=number_format( $sum, 2 )?></div>
+		<div class="budget-value"><?=$sum_formatted?></div>
 
 		<div class="budget-desc">remaining in <?=date('F Y')?></div>
 

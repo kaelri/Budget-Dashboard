@@ -25,8 +25,9 @@ $values   = $response->getValues();
 $sum = 0;
 
 if ( !empty($values) ) { foreach( $values as $value ) {
-	$num = (float) str_replace( '$', '', $value[0] );
-	$sum += $num;
+	$num = str_replace( '$', '', $value[0] );
+	$num = str_replace( ',', '', $num );
+	$sum += (float) $num;
 }}
 
 $sum_prefix    = ( $sum >= 0 ) ? '$' : '-$';
